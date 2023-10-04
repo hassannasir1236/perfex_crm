@@ -13,7 +13,7 @@
              if ((isset($item['collapse']) && $item['collapse']) && count($item['children']) === 0) {
                  continue;
              } ?>
-             <?php if($item['name']=='Dashboard' || $item['name']=='Leads' || $item['name']=='Setup' || $item['name']== 'application'){ ?>
+             <?php if($item['name']=='Dashboard' || $item['name']=='Leads' || $item['name']=='Setup' || $item['name']== 'Sales Frontend'){ ?>
                 <li class="menu-item-<?php echo $item['slug']; ?>"
                     <?php echo _attributes_to_string(isset($item['li_attributes']) ? $item['li_attributes'] : []); ?>>
                     <a href="<?php echo count($item['children']) > 0 ? '#' : $item['href']; ?>" aria-expanded="false"

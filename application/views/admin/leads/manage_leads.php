@@ -22,7 +22,8 @@
                             <a href="#" class="btn btn-default btn-with-tooltip" data-toggle="tooltip"
                                 data-title="<?php echo _l('leads_summary'); ?>" data-placement="top"
                                 onclick="slideToggle('.leads-overview'); return false;"><i
-                                    class="fa fa-bar-chart"></i></a>
+                                    class="fa fa-bar-chart"></i>
+                            </a>
                             <a href="<?php echo admin_url('leads/switch_kanban/' . $switch_kanban); ?>"
                                 class="btn btn-default mleft5 hidden-xs" data-toggle="tooltip" data-placement="top"
                                 data-title="<?php echo $switch_kanban == 0 ? _l('leads_switch_to_kanban') : _l('switch_to_list_view'); ?>">
@@ -34,7 +35,7 @@
                             </a>
                         </div>
                         <div class="col-sm-4 col-xs-12 pull-right leads-search">
-                            <?php if ($this->session->userdata('leads_kanban_view') == '') { ?>
+                            <?php if ($this->session->userdata('leads_kanban_view') == '' || $this->session->userdata('leads_kanban_view') == 'false') { ?>
                             <div data-toggle="tooltip" data-placement="top"
                                 data-title="<?php echo _l('search_by_tags'); ?>">
                                 <?php echo render_input('search', '', '', 'search', ['data-name' => 'search', 'onkeyup' => 'leads_kanban();', 'placeholder' => _l('leads_search')], [], 'no-margin') ?>
@@ -71,14 +72,13 @@
                             </div>
                             <?php } ?>
                         </div>
-
                     </div>
                 </div>
                 <div class="<?php echo $isKanBan ? 'panel_s' : '' ; ?>">
                     <div class="<?php echo $isKanBan ? 'panel-body' : '' ; ?>">
                         <div class="tab-content">
-                            <?php
-                        if (!$isKanBan) { ?>
+                            <?php 
+                        if (!$isKanBan) {  ?>
                             <div class="active kan-ban-tab" id="kan-ban-tab" style="overflow:auto;">
                                 <div class="kanban-leads-sort">
                                     <span class="bold"><?php echo _l('leads_sort_by'); ?>: </span>

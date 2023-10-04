@@ -21,7 +21,7 @@ class Leads extends AdminController
     public function index($id = '')
     {
         close_setup_menu();
-
+ 
         if (!is_staff_member()) {
             access_denied('Leads');
         }

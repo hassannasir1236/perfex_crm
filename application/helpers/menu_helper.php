@@ -13,7 +13,13 @@ function app_init_admin_sidebar_menu_items()
         'icon'     => 'fa fa-home',
         'badge'    => [],
     ]);
-
+    $CI->app_menu->add_sidebar_menu_item('Sales Frontend', [
+        'name'     => _l('Sales Frontend'),
+        'href'     => admin_url('application'),
+        'position' => 1,
+        'icon'     => 'fa-solid fa-money-bill-trend-up',
+        'badge'    => [],
+    ]);
     if (
         has_permission('customers', '', 'view')
         || (have_assigned_customers()
@@ -27,7 +33,7 @@ function app_init_admin_sidebar_menu_items()
             'badge'    => [],
         ]);
     }
-
+    
     $CI->app_menu->add_sidebar_menu_item('sales', [
         'collapse' => true,
         'name'     => _l('als_sales'),

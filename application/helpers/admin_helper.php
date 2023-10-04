@@ -37,7 +37,7 @@ function init_head($aside = true)
     $CI->load->view('admin/includes/setup_menu');
     if ($aside == true) {
         $CI->load->view('admin/includes/aside');
-    }
+    } 
 }
 /**
  * @since  1.0.0

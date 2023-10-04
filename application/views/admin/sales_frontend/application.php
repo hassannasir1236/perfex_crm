@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <?php init_head(); ?>
-<?php    
+<!-- <?php    
 $staff = array(
     0 => array(
         'staffid' => 1,
@@ -12,7 +12,7 @@ $staff = array(
         'phonenumber' => '',
         )
     );
-?>
+?> -->
 <div id="wrapper">
     <div class="content">
         <div class="row">
@@ -33,8 +33,8 @@ $staff = array(
                     <div class="row">
                         <div class="col-sm-5 ">
                             <a href="#" class="btn btn-default btn-with-tooltip" data-toggle="tooltip" data-title="<?php echo _l('Sales Frontend Summary'); ?>" data-placement="top" onclick="slideToggle('.leads-overview'); return false;"><i class="fa fa-bar-chart"></i></a>
-                            <!-- anchor href <?php echo admin_url('leads/switch_kanban/' . $switch_kanban); ?> -->
-                            <!-- <a href=""
+                            <!-- anchor href <?php echo admin_url('application/switch_kanban/' . $switch_kanban); ?> -->
+                            <a href="<?php echo admin_url('application/switch_kanban/' . $switch_kanban); ?>"
                                 class="btn btn-default mleft5 hidden-xs" data-toggle="tooltip" data-placement="top"
                                 data-title="<?php echo $switch_kanban == 1 ? _l('leads_switch_to_kanban') : _l('switch_to_list_view'); ?>">
                                 <?php if ($switch_kanban == 1) { ?>
@@ -42,9 +42,9 @@ $staff = array(
                                 <?php } else { ?>
                                 <i class="fa-solid fa-table-list"></i>
                                 <?php }; ?>
-                            </a> -->
+                            </a>
                         </div>
-                        <!-- <div class="col-sm-4 col-xs-12 pull-right leads-search">
+                        <div class="col-sm-4 col-xs-12 pull-right leads-search">
                             <?php if ($this->session->userdata('leads_kanban_view') == 'true') { ?>
                             <div data-toggle="tooltip" data-placement="top"
                                 data-title="<?php echo _l('search_by_tags'); ?>">
@@ -53,7 +53,7 @@ $staff = array(
                             <?php } ?>
                             <?php echo form_hidden('sort_type'); ?>
                             <?php echo form_hidden('sort', (get_option('default_leads_kanban_sort') != '' ? get_option('default_leads_kanban_sort_type') : '')); ?>
-                        </div> -->
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="hide leads-overview tw-mt-2 sm:tw-mt-4 tw-mb-4 sm:tw-mb-0">
@@ -61,7 +61,7 @@ $staff = array(
                             <?php echo _l('Sales Frontend Summary'); ?>
                         </h4>
                         <div class="tw-flex tw-flex-wrap tw-flex-col lg:tw-flex-row tw-w-full tw-gap-3 lg:tw-gap-6">
-                            <!-- <?php
+                            <?php
                                     foreach ($summary as $status) { ?>
                             <div
                                 class="lg:tw-border-r lg:tw-border-solid lg:tw-border-neutral-300 tw-flex-1 tw-flex tw-items-center last:tw-border-r-0">
@@ -80,7 +80,7 @@ $staff = array(
                                     <?php echo $status['name']; ?>
                                 </span>
                             </div>
-                            <?php } ?> -->
+                            <?php } ?>
                             <div class="lg:tw-border-r lg:tw-border-solid lg:tw-border-neutral-300 tw-flex-1 tw-flex tw-items-center last:tw-border-r-0">
                                 <span class="tw-font-semibold tw-mr-3 rtl:tw-ml-3 tw-text-lg">
                                     <span data-toggle="tooltip">
@@ -104,6 +104,39 @@ $staff = array(
                 <div class="panel_s">
                     <div class="panel-body">
                         <div class="tab-content">
+                        <?php 
+                        if ($isKanBan) {  ?>
+                            <div class="active kan-ban-tab" id="kan-ban-tab" style="overflow:auto;">
+                                <div class="kanban-leads-sort">
+                                    <span class="bold"><?php echo _l('leads_sort_by'); ?>: </span>
+                                    <a href="#" onclick="leads_kanban_sort('dateadded'); return false"
+                                        class="dateadded">
+                                        <?php if (get_option('default_leads_kanban_sort') == 'dateadded') {
+                            echo '<i class="kanban-sort-icon fa fa-sort-amount-' . strtolower(get_option('default_leads_kanban_sort_type')) . '"></i> ';
+                        } ?><?php echo _l('leads_sort_by_datecreated'); ?>
+                                    </a>
+                                    |
+                                    <a href="#" onclick="leads_kanban_sort('leadorder');return false;"
+                                        class="leadorder">
+                                        <?php if (get_option('default_leads_kanban_sort') == 'leadorder') {
+                            echo '<i class="kanban-sort-icon fa fa-sort-amount-' . strtolower(get_option('default_leads_kanban_sort_type')) . '"></i> ';
+                        } ?><?php echo _l('leads_sort_by_kanban_order'); ?>
+                                    </a>
+                                    |
+                                    <a href="#" onclick="leads_kanban_sort('lastcontact');return false;"
+                                        class="lastcontact">
+                                        <?php if (get_option('default_leads_kanban_sort') == 'lastcontact') {
+                            echo '<i class="kanban-sort-icon fa fa-sort-amount-' . strtolower(get_option('default_leads_kanban_sort_type')) . '"></i> ';
+                        } ?><?php echo _l('leads_sort_by_lastcontact'); ?>
+                                    </a>
+                                </div>
+                                <div class="row">
+                                    <div class="container-fluid leads-kan-ban">
+                                        <div id="kan-ban"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } else { ?>
                             <div class="row" id="leads-table">
                                 <div class="col-md-12">
                                     <div class="row">
@@ -118,15 +151,15 @@ $staff = array(
                                         <div class="col-md-3 leads-filter-column">
                                             <?php
                                                     $selected = [];
-                                                    $statuses = array(
-                                                        0 => array(
-                                                            'id' => 1,
-                                                            'name' => 'Customer',
-                                                            'statusorder' => 1000,
-                                                            'color' => '#7cb342',
-                                                            'isdefault' => 1
-                                                        )
-                                                    );
+                                                    // $statuses = array(
+                                                    //     0 => array(
+                                                    //         'id' => 1,
+                                                    //         'name' => 'Customer',
+                                                    //         'statusorder' => 1000,
+                                                    //         'color' => '#7cb342',
+                                                    //         'isdefault' => 1
+                                                    //     )
+                                                    // );
                                                     // if ($this->input->get('status')) {
                                                     //     $selected[] = $this->input->get('status');
                                                     // } else {
@@ -145,16 +178,16 @@ $staff = array(
                                         </div>
                                         <div class="col-md-3 leads-filter-column">
                                             <?php
-                                              $sources = array(
-                                                0 => array(
-                                                    'id' => 2,
-                                                    'name' => 'Facebook'
-                                                ),
-                                                1 => array(
-                                                    'id' => 1,
-                                                    'name' => 'Google'
-                                                )
-                                            );
+                                            //   $sources = array(
+                                            //     0 => array(
+                                            //         'id' => 2,
+                                            //         'name' => 'Facebook'
+                                            //     ),
+                                            //     1 => array(
+                                            //         'id' => 1,
+                                            //         'name' => 'Google'
+                                            //     )
+                                            // );
                                             echo render_select('view_source', $sources, ['id', 'name'], '', '', ['data-width' => '100%', 'data-none-selected-text' => _l('leads_source')], [], 'no-mbot');
                                             ?>
                                         </div>
@@ -341,6 +374,7 @@ $staff = array(
                                     </div>
                                 </div>
                             </div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -353,6 +387,24 @@ $staff = array(
 </script>
 <?php include_once(APPPATH . 'views/admin/leads/status.php'); ?>
 <?php init_tail(); ?>
+<script>
+var openLeadID = '<?php echo $leadid; ?>';
+$(function() {
+    leads_kanban();
+    $('#leads_bulk_mark_lost').on('change', function() {
+        $('#move_to_status_leads_bulk').prop('disabled', $(this).prop('checked') == true);
+        $('#move_to_status_leads_bulk').selectpicker('refresh')
+    });
+    $('#move_to_status_leads_bulk').on('change', function() {
+        if ($(this).selectpicker('val') != '') {
+            $('#leads_bulk_mark_lost').prop('disabled', true);
+            $('#leads_bulk_mark_lost').prop('checked', false);
+        } else {
+            $('#leads_bulk_mark_lost').prop('disabled', false);
+        }
+    });
+});
+</script>
 <!-- <script>
 var openLeadID = '<?php echo $leadid; ?>';
 $(function() {
