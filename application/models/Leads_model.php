@@ -21,7 +21,6 @@ class Leads_model extends App_Model
         $this->db->select('*,' . db_prefix() . 'leads.name, ' . db_prefix() . 'leads.id,' . db_prefix() . 'leads_status.name as status_name,' . db_prefix() . 'leads_sources.name as source_name');
         $this->db->join(db_prefix() . 'leads_status', db_prefix() . 'leads_status.id=' . db_prefix() . 'leads.status', 'left');
         $this->db->join(db_prefix() . 'leads_sources', db_prefix() . 'leads_sources.id=' . db_prefix() . 'leads.source', 'left');
-
         $this->db->where($where);
         if (is_numeric($id)) {
             $this->db->where(db_prefix() . 'leads.id', $id);
@@ -793,7 +792,7 @@ class Leads_model extends App_Model
         $this->db->where('id', $data['leadid']);
         $_old = $this->db->get(db_prefix() . 'leads')->row();
 
-        $old_status = '';
+        $old_status = ''; 
 
         if ($_old) {
             $old_status = $this->get_status($_old->status);

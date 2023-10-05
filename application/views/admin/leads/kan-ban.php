@@ -65,7 +65,7 @@ foreach ($statuses as $status) {
                     <ul class="status leads-status sortable" data-lead-status-id="<?php echo $status['id']; ?>">
                         <?php
                 foreach ($leads as $lead) {
-                    $this->load->view('admin/leads/_kan_ban_card', ['lead' => $lead, 'status' => $status, 'base_currency' => $base_currency]);
+                    // $this->load->view('admin/leads/_kan_ban_card', ['lead' => $lead, 'status' => $status, 'base_currency' => $base_currency]);
                 } ?>
                         <?php if ($total_leads > 0) { ?>
                         <li class="text-center not-sortable kanban-load-more"

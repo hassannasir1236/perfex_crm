@@ -20,7 +20,7 @@ $staff = array(
                 <div class="_buttons tw-mb-2 sm:tw-mb-4">
                     <a href="#" onclick="init_lead(); return false;" class="btn btn-primary mright5 pull-left display-block">
                         <i class="fa-regular fa-plus tw-mr-1"></i>
-                        <?php echo _l('Sales Frontend'); ?>
+                        <?php echo _l('New Sales Frontend'); ?>
                     </a>
                     <?php if (is_admin() || get_option('allow_non_admin_members_to_import_leads') == '1') { ?>
                         <!-- anchor link for import leads  -->
@@ -81,7 +81,7 @@ $staff = array(
                                 </span>
                             </div>
                             <?php } ?>
-                            <div class="lg:tw-border-r lg:tw-border-solid lg:tw-border-neutral-300 tw-flex-1 tw-flex tw-items-center last:tw-border-r-0">
+                            <!-- <div class="lg:tw-border-r lg:tw-border-solid lg:tw-border-neutral-300 tw-flex-1 tw-flex tw-items-center last:tw-border-r-0">
                                 <span class="tw-font-semibold tw-mr-3 rtl:tw-ml-3 tw-text-lg">
                                     <span data-toggle="tooltip">
                                         0
@@ -96,11 +96,13 @@ $staff = array(
                                     </span>
                                 </span>
                                 <span class="text-danger">Lost Sales frontend</span>
-                            </div>
+                            </div> -->
                         </div>
 
                     </div>
                 </div>
+                <!-- <div class="<?php echo $isKanBan ? 'panel_s' : '' ; ?>">
+                    <div class="<?php echo $isKanBan ? 'panel-body' : '' ; ?>"> -->
                 <div class="panel_s">
                     <div class="panel-body">
                         <div class="tab-content">
@@ -202,11 +204,11 @@ $staff = array(
                                                         <?php echo _l('lead_add_edit_contacted_today'); ?></option>
                                                     <option value="created_today"><?php echo _l('created_today'); ?>
                                                     </option>
-                                                    <!-- <?php if (has_permission('leads', '', 'edit')) { ?>
+                                                    <?php if (has_permission('leads', '', 'edit')) { ?>
                                                 <option value="not_assigned"><?php echo _l('leads_not_assigned'); ?>
                                                 </option>
-                                            <?php } ?> -->
-                                                    <!-- <?php if (isset($consent_purposes)) { ?>
+                                            <?php } ?>
+                                                    <?php if (isset($consent_purposes)) { ?>
                                                 <optgroup label="<?php echo _l('gdpr_consent'); ?>">
                                                     <?php foreach ($consent_purposes as $purpose) { ?>
                                                         <option value="consent_<?php echo $purpose['id']; ?>">
@@ -214,7 +216,7 @@ $staff = array(
                                                         </option>
                                                     <?php } ?>
                                                 </optgroup>
-                                            <?php } ?> -->
+                                            <?php } ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -349,6 +351,7 @@ $staff = array(
                                     foreach ($_table_data as $_t) {
                                         array_push($table_data, $_t);
                                     }
+                                    // print_r($table_data);
                                     $custom_fields = get_custom_fields('leads', ['show_on_table' => 1]);
                                     foreach ($custom_fields as $field) {
                                         array_push($table_data, [

@@ -74,8 +74,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="<?php echo $isKanBan ? 'panel_s' : '' ; ?>">
-                    <div class="<?php echo $isKanBan ? 'panel-body' : '' ; ?>">
+                <!-- <div class="<?php echo $isKanBan ? 'panel_s' : '' ; ?>">
+                    <div class="<?php echo $isKanBan ? 'panel-body' : '' ; ?>"> -->
+                <div class="panel_s">
+                    <div class="panel-body">
                         <div class="tab-content">
                             <?php 
                         if (!$isKanBan) {  ?>
