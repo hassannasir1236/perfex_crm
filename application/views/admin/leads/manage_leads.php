@@ -6,7 +6,7 @@
             <div class="col-md-12">
                 <div class="_buttons tw-mb-2 sm:tw-mb-4">
                     <a href="#" onclick="init_lead(); return false;"
-                        class="btn btn-primary mright5 pull-left display-block">
+                        class="btn btn-primary mright5 pull-left display-block"> 
                         <i class="fa-regular fa-plus tw-mr-1"></i>
                         <?php echo _l('new_lead'); ?>
                     </a>

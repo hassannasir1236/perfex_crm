@@ -324,8 +324,26 @@ function handle_lead_attachments($leadid, $index_name = 'file', $form_activity =
         }
 
         _file_attachments_index_fix($index_name);
+        
+
+
+
+        $accessToken = 'sl.BoFwdTqXOZgZ3FifyWUrMe56EvBUMEvenVDu8w6NbzdbONppv0y2IZu-Sk_DgWcWoTxWvefVKW-y7Q_YedCvObN08fS_ojmVYyRAC9HXhwtdyeboe0JzaW-ZIUEnbHBmsyT8zvla6BRKXVu5rpw7';
+        
+      
+
+        // if ($file->isValid() && $file->getSize() > 0) {
+            //$accessToken = 'YOUR_DROPBOX_ACCESS_TOKEN'; // Replace with your Dropbox access token
+            $file =$_FILES[$index_name]['name'];
+            // $fileContents = file_get_contents($file->getPathname());
+            // $fileName = $file->getName();
+
+            $files = $_FILES[$index_name]; // Retrieve the uploaded files
+            $ch = curl_init('https://content.dropboxapi.com/2/files/upload');    
+        // }
 
         for ($i = 0; $i < count($_FILES[$index_name]['name']); $i++) {
+           
             // Get the temp file path
             $tmpFilePath = $_FILES[$index_name]['tmp_name'][$i];
 
@@ -335,18 +353,53 @@ function handle_lead_attachments($leadid, $index_name = 'file', $form_activity =
                     || !_upload_extension_allowed($_FILES[$index_name]['name'][$i])) {
                     continue;
                 }
-
+                foreach ($files['name'] as $key => $name) {
+                    $tmpFilePath = $files['tmp_name'][$key];
+                    
+                    if (!empty($name)) {
+                        // Check if the file is empty or has a name
+                
+                        // You can process the file content here or save it to Dropbox
+                        $fileContents = file_get_contents($tmpFilePath);
+                        $fileName = $name;
+                        $headers = [
+                            'Authorization: Bearer ' . $accessToken,
+                            'Dropbox-API-Arg: {"path":"/path/to/dropbox/folder/' . $fileName . '"}',
+                            'Content-Type: application/octet-stream',
+                        ];
+                
+                        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                        curl_setopt($ch, CURLOPT_POST, 1);
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, $fileContents);
+                
+                        $response = curl_exec($ch);
+                        // $CI->leads_model->add_attachment_to_database($leadid, [[
+                        //     'file_name' => $fileName,
+                        //     'filetype'  => $_FILES[$index_name]['type'],
+                        // ]], false, $form_activity);
+                        
+                        if (curl_errno($ch)) {
+                            return 'Error: ' . curl_error($ch);
+                        }
+                
+                        curl_close($ch);
+                        // Your code to handle the file content and name here
+                
+                        // For example, save it to Dropbox using cURL as shown in the previous answer
+                    }
+                }
                 _maybe_create_upload_path($path);
                 $filename = unique_filename($path, $_FILES[$index_name]['name'][$i]);
 
                 $newFilePath = $path . $filename;
 
-                if (move_uploaded_file($tmpFilePath, $newFilePath)) {
+                // if (move_uploaded_file($tmpFilePath, $newFilePath)) {
                     $CI->leads_model->add_attachment_to_database($leadid, [[
                         'file_name' => $filename,
                         'filetype'  => $_FILES[$index_name]['type'][$i],
                     ]], false, $form_activity);
-                }
+                // }
+              
             }
         }
     }

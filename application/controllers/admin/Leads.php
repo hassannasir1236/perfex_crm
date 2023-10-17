@@ -624,14 +624,16 @@ class Leads extends AdminController
     public function add_lead_attachment()
     {
         $id       = $this->input->post('id');
-        $lastFile = $this->input->post('last_file');
+        // $lastFile = $this->input->post('last_file');
 
         if (!is_staff_member() || !$this->leads_model->staff_can_access_lead($id)) {
             ajax_access_denied();
         }
-
+        
         handle_lead_attachments($id);
-        echo json_encode(['leadView' => $lastFile ? $this->_get_lead_data($id) : [], 'id' => $id]);
+        // return redirect('http://localhost:8080/perfex_crm/admin/leads/index');
+        // echo json_encode(['leadView' => $lastFile ? $this->_get_lead_data($id) : [], 'id' => $id]);
+        
     }
 
     public function add_external_attachment()

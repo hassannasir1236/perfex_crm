@@ -16,7 +16,7 @@ function app_init_admin_sidebar_menu_items()
     $CI->app_menu->add_sidebar_menu_item('Sales Frontend', [
         'name'     => _l('Sales Frontend'),
         'href'     => admin_url('application'),
-        'position' => 1,
+        'position' => 55,
         'icon'     => 'fa-solid fa-money-bill-trend-up',
         'badge'    => [],
     ]);
@@ -201,7 +201,7 @@ function app_init_admin_sidebar_menu_items()
         $CI->app_menu->add_sidebar_menu_item('estimate_request', [
             'name'     => _l('estimate_request'),
             'href'     => admin_url('estimate_request'),
-            'position' => 46,
+            'position' => 100,
             'icon'     => 'fa-regular fa-file',
             'badge'    => [],
         ]);

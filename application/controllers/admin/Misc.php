@@ -108,7 +108,7 @@ class Misc extends AdminController
             $this->db->where('id', $id);
             $this->db->delete(db_prefix() . 'sales_activity');
         }
-    }
+    } 
 
     public function upload_sales_file()
     {

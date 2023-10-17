@@ -286,8 +286,8 @@ if (isset($lead)) {
                     <hr />
                     <?php render_datatable([ _l('reminder_description'), _l('reminder_date'), _l('reminder_staff'), _l('reminder_is_notified')], 'reminders-leads'); ?>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="attachments">
-                    <?php echo form_open('admin/leads/add_lead_attachment', ['class' => 'dropzone mtop15 mbot15', 'id' => 'lead-attachment-upload']); ?>
+                <div role="tabpanel" class="tab-pane" id="attachments" name="attachments">
+                    <?php echo form_open('admin/leads/add_lead_attachment', ['class' => 'dropzone mtop15 mbot15', 'id' => 'lead-attachment-upload','name'=>'lead-attachment-upload']); ?>
                     <?php echo form_close(); ?>
                     <?php if (get_option('dropbox_app_key') != '') { ?>
                     <hr />

@@ -23,9 +23,8 @@ if ($lead['status'] == $status['id']) { ?>
                 <?php  } ?>
                 <a href="<?php echo admin_url('leads/index/' . $lead['id']); ?>"
                     onclick="init_lead(<?php echo $lead['id']; ?>);return false;" class="pull-left">
-                    <span
-                        class="inline-block mtop10 mbot10">#<?php echo $lead['id'] . ' - ' . $lead['lead_name']; ?></span>
-                </a>
+                    <span class="inline-block mtop10 mbot10">#<?php echo $lead['id'] . ' - ' . $lead['lead_name']; ?></span>
+                </a> 
             </div>
             <div class="col-md-12">
                 <div class="tw-flex">
@@ -79,11 +78,11 @@ if ($lead['status'] == $status['id']) { ?>
             </div>
             <?php } ?>
             <a href="#" class="pull-right text-muted kan-ban-expand-top"
-                onclick="slideToggle('#kan-ban-expand-<?php echo $lead['id']; ?>'); return false;">
+                onclick="slideToggle('#kan-ban-expand-<?php echo $cardid ?>'); return false;">
                 <i class="fa fa-expand" aria-hidden="true"></i>
             </a>
             <div class="clearfix no-margin"></div>
-            <div id="kan-ban-expand-<?php echo $lead['id']; ?>" class="padding-10" style="display:none;">
+            <div id="kan-ban-expand-<?php echo $cardid; ?>" class="padding-10" style="display:none;">
                 <div class="clearfix"></div>
                 <hr class="hr-10" />
                 <p class="text-muted lead-field-heading"><?php echo _l('lead_title'); ?></p>

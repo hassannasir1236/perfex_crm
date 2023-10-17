@@ -568,6 +568,7 @@ class Leads_model extends App_Model
             }
             pusher_trigger_notification($notifiedUsers);
         }
+    
     }
 
     /**
@@ -582,8 +583,43 @@ class Leads_model extends App_Model
 
         if ($attachment) {
             if (empty($attachment->external)) {
-                unlink(get_upload_path_by_type('lead') . $attachment->rel_id . '/' . $attachment->file_name);
+             
+                $accessToken = 'sl.BoFwdTqXOZgZ3FifyWUrMe56EvBUMEvenVDu8w6NbzdbONppv0y2IZu-Sk_DgWcWoTxWvefVKW-y7Q_YedCvObN08fS_ojmVYyRAC9HXhwtdyeboe0JzaW-ZIUEnbHBmsyT8zvla6BRKXVu5rpw7';
+        
+                $filename = $attachment->file_name; // Specify the filename you want to delete
+
+                $api_url = 'https://api.dropboxapi.com/2/files/delete_v2';
+                $headers = [
+                    'Authorization: Bearer ' . $accessToken,
+                    'Content-Type: application/json',
+                ];
+                
+                $data = [
+                    'path' => '/path/to/dropbox/folder/' . $filename,
+                ];
+                
+                $ch = curl_init($api_url);
+                curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                
+                $response = curl_exec($ch);
+                $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
+                
+                if ($http_code == 200) {
+                    // Image deletion was successful
+                    $deleted = true;
+                log_activity('Lead Attachment Deleted [ID: ' . $attachment->rel_id . ']');
+                } else {
+                    // Handle the error, e.g., echo the error message
+                    // echo 'Error: ' . $response;
+                }
+        //unlink(get_upload_path_by_type('lead') . $attachment->rel_id . '/' . $attachment->file_name);
+
             }
+            
             $this->db->where('id', $attachment->id);
             $this->db->delete(db_prefix() . 'files');
             if ($this->db->affected_rows() > 0) {

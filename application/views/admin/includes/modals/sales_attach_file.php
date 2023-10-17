@@ -8,7 +8,7 @@
                 <h4 class="modal-title"><?php echo _l('invoice_attach_file'); ?></h4>
             </div>
             <div class="modal-body">
-                <div class="row">
+                <div class="row"> 
                     <div class="col-md-12">
                         <?php echo form_open_multipart('admin/misc/upload_sales_file', ['id' => 'sales-upload', 'class' => 'dropzone']); ?>
                         <input type="file" name="file" multiple />
